@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Poetry Project</title>
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+    </head>
+    <body>
+          <div class="poem-column">
+            <div class="poem-content">
+                <ul class="verse" id="verse1">
+                    <li class="line" id="line1">The women stand at altar, hand in hand,</li>
+                    <li class="line" id="line2">Their rings sapphire and gold, their friend beginning</li>
+                    <li class="line" id="line3">Against the law to ask them the demands</li>
+                    <li class="line" id="line4">Of wedlock. Love, comfort, honor, safekeep.</li>
+                </ul>
+
+                <ul class="verse" id="verse2">
+                    <li class="line" id="line1">The state does not define our love, they say,</li>
+                    <li class="line" id="line2">And drink champagne, and call each other wife.</li>
+                    <li class="line" id="line3">But wouldn’t it be nice? To sign their names</li>
+                    <li class="line" id="line4">And see their union be confirmed by law?</li>
+                </ul>
+
+                <ul class="verse" id="verse3">
+                    <li class="line" id="line1">Allowed to be her next of kin, allowed</li>
+                    <li class="line" id="line2">To be a mother to her child, allowed</li>
+                    <li class="line" id="line3">To tell the world, which means the government,</li>
+                    <li class="line" id="line4">That she’s her love, her most important person.</li>
+                </ul>
+
+                <ul class="verse" id="verse4">
+                    <li class="line" id="line1">For now they’ll stand at altar, here to tell</li>
+                    <li class="line" id="line2">The world, which means the world, that they are wives.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="map-wrapper">
+            <div class="map-column">
+                <svg id="left-svg"></svg>
+            </div>
+            <div class="map-column">
+                <svg id="right-svg"></svg>
+            </div>
+        </div>
+            <div class="scale-wrapper">
+                <text>0%</text>
+                <div class="scale"></div>
+                <text>100%</text>
+            </div>
+            <div class="scale-text-wrapper">
+                <text class="scale-text">% of same-sex households reporting as spouses</text>
+            </div>
+        <footer>
+            <h1 class="legal-labels">illegal</h1>
+            <button class="arrow-button" id="backward-button">◄</button>
+            <h1 class="title">2005</h1>
+            <button class="arrow-button" id="forward-button">►</button>
+            <h1 class="legal-labels">legal</h1>
+        </footer>
+        <script src="main.js"></script>
+    </body>
+</html>

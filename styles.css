@@ -1,0 +1,102 @@
+body,
+h1,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    background-color: #d1c1e7;
+    color: #45365b;
+    font-family: Cambria;
+}
+
+.poem-column {
+    color: #d6290d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.poem-content {
+    max-height: calc(100vh / 5);
+    overflow: auto;
+}
+
+.poem-content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.verse {
+    list-style-type: none;
+    font-size: 1.4em;
+    padding: 0px;
+    font-weight: 100;
+    color: #45365b;
+  }
+
+.legal-labels {
+    margin: 250px;
+}
+
+.map-wrapper {
+    display: flex;
+    flex-grow: 1;
+}
+
+.map-column {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.state {
+    fill: #d1c1e7;
+    /*stroke: #45365b;*/
+}
+
+.active {
+    fill: white;
+}
+
+.scale {
+    height: 20px;
+    width: 250px;
+    margin: 10px;
+    background-image: linear-gradient(to right, black, white);
+}
+
+.scale-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scale-text-wrapper {
+    text-align: center;
+}
+
+footer {
+    background-color: #45365b;
+    text-align: center;
+    color: white;
+    height: 50px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    display: flex; /*need this to be a flex to work with justify-content/align-items*/
+    justify-content: center;
+    align-items: center;
+  }
+
+.arrow-button {
+    margin: 15px;
+    border: none;
+    color: white;
+    background-color: #45365b;
+    font-size: large;
+}
