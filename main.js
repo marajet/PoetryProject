@@ -200,6 +200,8 @@ function updateMaps(year) {
     }
     // update fill of all active states
     leftSVG.selectAll(".active")
+        .transition()
+        .duration(1000)
         .style("fill", d => {
             let stateName = d.properties.NAME;
             for (let j = jOrig; j < jOrig + 51; j++) {
@@ -211,6 +213,8 @@ function updateMaps(year) {
             return "#d1c1e7";
         });
     rightSVG.selectAll(".active")
+        .transition()
+        .duration(1000)
         .style("fill", d => {
             let stateName = d.properties.NAME;
             for (let j = jOrig; j < jOrig + 51; j++) {
@@ -228,11 +232,15 @@ function updateMaps(year) {
         .filter(function(d) {
             return !(leftSVG.select("#" + d.properties.NAME.replace(/\s/g, "")).classed("active"));     
         })
+        .transition()
+        .duration(1000)
         .style("fill", "#d1c1e7");
     rightSVG.selectAll(".state")
         .filter(function(d) {
             return !(rightSVG.select("#" + d.properties.NAME.replace(/\s/g, "")).classed("active"));     
         })
+        .transition()
+        .duration(1000)
         .style("fill", "#d1c1e7");
 }
 
