@@ -2,17 +2,17 @@ let keyframes = [
     {
         activeVerse: 1,
         activeLines: [1],
-        svgUpdate: () => updateMaps(2005)
-    },
-    {
-        activeVerse: 1,
-        activeLines: [2],
         svgUpdate: () => updateMaps(2008)
     },
     {
         activeVerse: 1,
+        activeLines: [2],
+        svgUpdate: () => updateMaps(2010)
+    },
+    {
+        activeVerse: 1,
         activeLines: [3],
-        svgUpdate: () => updateMaps(2011)
+        svgUpdate: () => updateMaps(2012)
     },
     {
         activeVerse: 1,
@@ -47,7 +47,7 @@ let keyframes = [
     {
         activeVerse: 4,
         activeLines: [1, 2],
-        svgUpdate: () => updateMaps(2005)
+        svgUpdate: () => updateMaps(2008)
     }
 ];
 
@@ -190,11 +190,19 @@ function updateMaps(year) {
             return !(leftSVG.select("#" + d.properties.NAME.replace(/\s/g, "")).classed("active"));
         });
 
+    // find the beginning of the relevant year
+    var jOrig = 0;
+    for (let j = 0; j < marriageData.length; j++) {
+        if (marriageData[j].Year == year) {
+            jOrig = j;
+            break;
+        }
+    }
     // update fill of all active states
     leftSVG.selectAll(".active")
         .style("fill", d => {
             let stateName = d.properties.NAME;
-            for (let j = 0; j < marriageData.length; j++) {
+            for (let j = jOrig; j < jOrig + 51; j++) {
                 if (stateName == marriageData[j].Area) {
                     val = colorScale(marriageData[j].Percent);
                     return val;
@@ -202,6 +210,30 @@ function updateMaps(year) {
             }
             return "#d1c1e7";
         });
+    rightSVG.selectAll(".active")
+        .style("fill", d => {
+            let stateName = d.properties.NAME;
+            for (let j = jOrig; j < jOrig + 51; j++) {
+                if (stateName == marriageData[j].Area) {
+                    val = colorScale(marriageData[j].Percent);
+                    return val;
+                }
+            }
+            return "#d1c1e7";
+        });
+
+    // update fill of all inactive states
+    leftSVG.selectAll(".state")
+        // filter out active states
+        .filter(function(d) {
+            return !(leftSVG.select("#" + d.properties.NAME.replace(/\s/g, "")).classed("active"));     
+        })
+        .style("fill", "#d1c1e7");
+    rightSVG.selectAll(".state")
+        .filter(function(d) {
+            return !(rightSVG.select("#" + d.properties.NAME.replace(/\s/g, "")).classed("active"));     
+        })
+        .style("fill", "#d1c1e7");
 }
 
 async function initialize() {
@@ -209,7 +241,6 @@ async function initialize() {
 
     initializeMap(leftSVG, mapData);
     initializeMap(rightSVG, mapData);
-    updateMaps(2005);
     drawKeyframe();
 }
 

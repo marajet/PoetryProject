@@ -67,7 +67,7 @@ body {
 
 .state {
     fill: #d1c1e7;
-    /*stroke: #45365b;*/
+    stroke: #d1c1e7;
 }
 
 /* if state is active */
