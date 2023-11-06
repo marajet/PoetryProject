@@ -12,7 +12,6 @@ body {
 }
 
 .poem-column {
-    color: #d6290d;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,8 +34,20 @@ body {
     font-size: 1.4em;
     padding: 0px;
     font-weight: 100;
+    color: #d1c1e7;
+}
+
+.active-verse {
     color: #45365b;
-  }
+}
+
+.active-line {
+    color: white;
+}
+
+.filler-verse {
+    height: 250px;
+}
 
 .legal-labels {
     margin: 250px;
@@ -59,6 +70,7 @@ body {
     /*stroke: #45365b;*/
 }
 
+/* if state is active */
 .active {
     fill: white;
 }

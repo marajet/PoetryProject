@@ -1,5 +1,59 @@
+let keyframes = [
+    {
+        activeVerse: 1,
+        activeLines: [1],
+        svgUpdate: () => updateMaps(2005)
+    },
+    {
+        activeVerse: 1,
+        activeLines: [2],
+        svgUpdate: () => updateMaps(2008)
+    },
+    {
+        activeVerse: 1,
+        activeLines: [3],
+        svgUpdate: () => updateMaps(2011)
+    },
+    {
+        activeVerse: 1,
+        activeLines: [4],
+        svgUpdate: () => updateMaps(2014)
+    },
+    {
+        activeVerse: 2,
+        activeLines: [1, 2, 3, 4],
+        svgUpdate: () => updateMaps(2015)
+    },
+    {
+        activeVerse: 3,
+        activeLines: [1],
+        svgUpdate: () => updateMaps(2016)
+    },
+    {
+        activeVerse: 3,
+        activeLines: [2],
+        svgUpdate: () => updateMaps(2017)
+    },
+    {
+        activeVerse: 3,
+        activeLines: [3],
+        svgUpdate: () => updateMaps(2018)
+    },
+    {
+        activeVerse: 3,
+        activeLines: [4],
+        svgUpdate: () => updateMaps(2019)
+    },
+    {
+        activeVerse: 4,
+        activeLines: [1, 2],
+        svgUpdate: () => updateMaps(2005)
+    }
+];
+
 let leftSVG = d3.select("#left-svg");
 let rightSVG = d3.select("#right-svg");
+let keyframeIndex = 0;
 
 let width = 600;
 let height = 350;
@@ -8,6 +62,65 @@ let colorScale;
 let mapData; // https://eric.clst.org/tech/usgeojson/
 let stateYears; // https://state.1keydata.com/date-same-sex-marriage-legalized-by-state.php
 let marriageData; // https://www.census.gov/data/tables/time-series/demo/same-sex-couples/ssc-house-characteristics.html
+
+document.getElementById("forward-button").addEventListener("click", forwardClicked);
+document.getElementById("backward-button").addEventListener("click", backwardClicked);
+
+function forwardClicked() {
+    if (keyframeIndex < keyframes.length - 1) {
+        keyframeIndex++;
+        drawKeyframe();
+    }
+}
+
+function backwardClicked() {
+    if (keyframeIndex > 0) {
+        keyframeIndex--;
+        drawKeyframe();
+    }
+}
+
+function drawKeyframe() {
+    let keyframe = keyframes[keyframeIndex];
+    resetActiveLines();
+    updateActiveVerse(keyframe.activeVerse);
+    for (line of keyframe.activeLines) {
+        updateActiveLine(keyframe.activeVerse, line);
+    }
+
+    if (keyframe.svgUpdate) {
+        keyframe.svgUpdate();
+    }
+}
+
+function resetActiveLines() {
+    d3.selectAll(".line").classed("active-line", false);
+}
+
+function updateActiveVerse(id) {
+    d3.selectAll(".verse").classed("active-verse", false);
+    d3.select("#verse" + id).classed("active-verse", true);
+    scrollColumnToActiveVerse(id);
+}
+
+function updateActiveLine(vid, lid) {
+    let curVerse = d3.select("#verse" + vid);
+    curVerse.select("#line" + lid).classed("active-line", true);
+}
+
+function scrollColumnToActiveVerse(id) {
+    var column = document.querySelector(".poem-content");
+    var curVerse = document.getElementById("verse" + id);
+
+    var verseRect = curVerse.getBoundingClientRect();
+    var columnRect = column.getBoundingClientRect();
+
+    var desiredScrollTop = verseRect.top + column.scrollTop - columnRect.top - (columnRect.height - verseRect.height) / 2;
+    column.scrollTo({
+        top: desiredScrollTop,
+        behavior: 'smooth'
+    });
+}
 
 async function loadData() {
     await d3.json("gz_2010_us_040_00_20m.json").then(data => {
@@ -53,6 +166,9 @@ function updateMaps(year) {
         return;
     }
 
+    // update year displayed on bottom
+    document.getElementById("title").textContent = year;
+
     // update active status for all states (which side of map they're on)
     leftSVG.selectAll(".state")
         .classed("active", (d) => {
@@ -81,7 +197,6 @@ function updateMaps(year) {
             for (let j = 0; j < marriageData.length; j++) {
                 if (stateName == marriageData[j].Area) {
                     val = colorScale(marriageData[j].Percent);
-                    console.log(val);
                     return val;
                 }
             }
@@ -95,6 +210,7 @@ async function initialize() {
     initializeMap(leftSVG, mapData);
     initializeMap(rightSVG, mapData);
     updateMaps(2005);
+    drawKeyframe();
 }
 
 initialize();
